@@ -1,6 +1,5 @@
 from enum import Enum
 
-
 class RoomType(str, Enum):
     one_room_apartment = "1-кімнатна квартира (вітальня і спальня разом, з кухнею та ванною)"
     two_room_apartment = "2-кімнатна квартира (спальня та вітальня окремо)"
@@ -16,4 +15,4 @@ class RoomType(str, Enum):
 
     @classmethod
     def choices(cls):
-        return [member.name for member in cls]
+        return [(member.name, member.value) for member in cls]

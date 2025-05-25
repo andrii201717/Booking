@@ -13,13 +13,13 @@ from os import environ
 from pathlib import Path
 
 from django.conf.global_settings import SECRET_KEY
-from  environ import Env
+import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-env = Env()
+env = environ.Env()
 
 env.read_env(BASE_DIR/ '.env')
 
@@ -32,7 +32,7 @@ SECRET_KEY = env.str('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool('DEBUG')
 
-ALLOWED_HOSTS = env.str('ALLOWED_HOSTS').split(',')
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
 
 
 # Application definition
@@ -49,7 +49,9 @@ INSTALLED_APPS = [
     # 3-rd party
 
     # local
-    'applications.rent.apps.RentConfig',
+    'applications.rooms.apps.RoomsConfig',
+    'applications.rentals.apps.RentalsConfig',
+    'applications.users.apps.UsersConfig',
 ]
 
 MIDDLEWARE = [
@@ -63,7 +65,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'Booking.urls'
-AUTH_USER_MODEL = 'auth.User'
+AUTH_USER_MODEL = 'users.User'
 
 TEMPLATES = [
     {
@@ -94,7 +96,7 @@ DATABASES = {
         'USER': env.str('MYSQL_USER'),
         'PASSWORD': env.str('MYSQL_PASSWORD'),
         'HOST': env.str('MYSQL_HOST'),
-        'PORT': env.str('MYSQL_PORT')
+        'PORT': env.str('MYSQL_PORT'),
     }
 }
 
