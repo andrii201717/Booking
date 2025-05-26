@@ -1,0 +1,1 @@
+from applications.rentals.models.rent import Rent
