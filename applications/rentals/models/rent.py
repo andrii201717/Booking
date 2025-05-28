@@ -28,9 +28,10 @@ class Rent(models.Model):
         default=RentStatus.PENDING.name
     )
     created_at = models.DateTimeField(auto_now_add=True)
+    objects = models.Manager()
 
     class Meta:
-        db_table = 'booking'
+        db_table = 'rent'
         ordering = ['-created_at']
         constraints = [
             models.CheckConstraint(

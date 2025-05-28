@@ -1,7 +1,11 @@
-from rest_framework import generics
-from .models.rent import Rent
-from .serializers import RentSerializer
+from rest_framework import viewsets, permissions
+from applications.rentals.models.rent import Rent
+from applications.rentals.serializers import RentSerializer
 
-class RentListCreateView(generics.ListCreateAPIView):
+class RentViewSet(viewsets.ModelViewSet):
     queryset = Rent.objects.all()
     serializer_class = RentSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save(lessee=self.request.user)

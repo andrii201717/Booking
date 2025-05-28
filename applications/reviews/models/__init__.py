@@ -1,0 +1,1 @@
+from applications.reviews.models.review import Review

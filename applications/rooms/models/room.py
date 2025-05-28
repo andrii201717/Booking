@@ -42,7 +42,7 @@ class Room(models.Model):
         self.save()
 
     class Meta:
-        db_table = "rent"
+        db_table = "room"
         constraints = [
             models.UniqueConstraint(fields=[
                 'title',

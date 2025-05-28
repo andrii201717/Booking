@@ -1,6 +1,7 @@
-from django.urls import path
-from .views import RentListCreateView
+from rest_framework.routers import DefaultRouter
+from applications.rentals.views import RentViewSet
 
-urlpatterns = [
-    path('', RentListCreateView.as_view(), name='rent-list-create'),
-]
+router = DefaultRouter()
+router.register('rents', RentViewSet, basename='rent')
+
+urlpatterns = router.urls
