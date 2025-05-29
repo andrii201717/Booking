@@ -6,7 +6,7 @@ class RentStatus(str, Enum):
     CONFIRMED = 'Підтверджено'
     CANCELLED = 'Відміненно'
     DECLINED = 'Відмовлено'
-
+    COMPLETED = 'Завершено'
     @classmethod
     def choices(cls):
         return [(member.name, member.value) for member in cls]

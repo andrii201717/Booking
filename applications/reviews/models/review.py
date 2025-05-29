@@ -1,16 +1,14 @@
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
-from django.utils import timezone
 
+from applications.rentals.choices.rental_status import RentStatus
 from applications.users.choices.roles import UserRoles
-from applications.users.models import User
-
 
 
 class Review(models.Model):
     reviewer = models.ForeignKey(
-        User,
+        'users.User',
         on_delete=models.CASCADE,
         related_name='reviews',
         limit_choices_to={'role': UserRoles.GUEST.name}
@@ -20,6 +18,14 @@ class Review(models.Model):
         on_delete=models.CASCADE,
         related_name='reviews'
     )
+    rent = models.ForeignKey(
+        'rentals.Rent',
+        on_delete=models.CASCADE,
+        related_name='reviews',
+        null=True,
+        blank=True
+    )
+
     rating = models.PositiveSmallIntegerField(
         validators=[MinValueValidator(1), MaxValueValidator(5)]
     )
@@ -40,9 +46,18 @@ class Review(models.Model):
             )
         ]
 
-    def save(self, *args, **kwargs):
+    def clean(self):
         if self.reviewer.role != UserRoles.GUEST.name:
             raise ValidationError("Тільки користувач з роллю 'GUEST' може залишити відгук.")
+
+        if self.rent.lessee != self.reviewer:
+            raise ValidationError("Відгук може залишити лише орендар цієї оренди.")
+
+        if self.rent.status != RentStatus.COMPLETED.name:
+            raise ValidationError("Відгук можна залишити лише після завершення оренди.")
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
         super().save(*args, **kwargs)
 
     def __str__(self):
