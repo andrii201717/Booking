@@ -1,8 +1,13 @@
 from django.urls import path, include
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 urlpatterns = [
-    path('rooms/', include('applications.rooms.urls')),
-    path('rents/', include('applications.rentals.urls')),
-
-    path("users/", include("applications.users.urls"))
+    path("auth/", include([
+        path("token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
+        path("token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
+    ])),
+    path("users/", include("applications.users.urls")),
+    path("reviews/", include("applications.reviews.urls")),
+    path("rooms/", include("applications.rooms.urls")),
+    path("rentals/", include("applications.rentals.urls")),
 ]

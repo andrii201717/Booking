@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     # 3-rd party
     'rest_framework',
     'django_filters',
+    'django_extensions',
 
     # local
     'applications.rooms.apps.RoomsConfig',
