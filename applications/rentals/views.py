@@ -8,4 +8,4 @@ class RentViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
     def perform_create(self, serializer):
-        serializer.save(lessee=self.request.user)
+        serializer.save(guest=self.request.user)

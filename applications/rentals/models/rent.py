@@ -9,16 +9,16 @@ from applications.users.models import User
 
 
 class Rent(models.Model):
-    lessee = models.ForeignKey(
+    guest = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name='bookings',
-        limit_choices_to={'role': 'LESSEE'}
+        related_name='rent',
+        limit_choices_to={'role': 'GUEST'}
     )
-    rent = models.ForeignKey(
+    room = models.ForeignKey(
         Room,
         on_delete=models.CASCADE,
-        related_name='bookings'
+        related_name='rent'
     )
     start_date = models.DateField()
     end_date = models.DateField()
@@ -36,10 +36,10 @@ class Rent(models.Model):
         constraints = [
             models.CheckConstraint(
                 check=models.Q(end_date__gt=models.F('start_date')),
-                name='booking_valid_date_range'
+                name='rent_valid_date_range'
             ),
             models.UniqueConstraint(
-                fields=['lessee', 'rent', 'start_date', 'end_date'],
+                fields=['guest', 'room', 'start_date', 'end_date'],
                 name='unique_booking_per_user_rent_period'
             )
         ]
@@ -49,4 +49,4 @@ class Rent(models.Model):
                 timezone.now().date() < self.start_date - timedelta(days=2))
 
     def __str__(self):
-        return f'{self.lessee} - {self.rent}'
+        return f'{self.guest} - {self.room}'

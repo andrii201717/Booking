@@ -4,15 +4,15 @@ from applications.rooms.models.room import Room
 from applications.users.models import User
 
 class RentSerializer(serializers.ModelSerializer):
-    lessee = serializers.PrimaryKeyRelatedField(queryset=User.objects.filter(role='LESSEE'))
+    lessee = serializers.PrimaryKeyRelatedField(queryset=User.objects.filter(role='GUESTE'))
     rent = serializers.PrimaryKeyRelatedField(queryset=Room.objects.all())
 
     class Meta:
         model = Rent
         fields = [
             'id',
-            'lessee',
-            'rent',
+            'guest',
+            'room',
             'start_date',
             'end_date',
             'status',
