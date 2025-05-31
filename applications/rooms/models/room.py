@@ -15,7 +15,7 @@ class Room(models.Model):
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
-        related_name='rents'
+        related_name='room'
     )
     price = models.DecimalField(max_digits=6, decimal_places=2)
     rooms_count = models.PositiveSmallIntegerField(default=0)
@@ -30,7 +30,7 @@ class Room(models.Model):
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
-        related_name='rents'
+        related_name='room'
     )
 
     objects = SoftDeleteManager()
