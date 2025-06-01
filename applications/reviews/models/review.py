@@ -50,7 +50,7 @@ class Review(models.Model):
         if self.reviewer.role != UserRoles.GUEST.name:
             raise ValidationError("Тільки користувач з роллю 'GUEST' може залишити відгук.")
 
-        if self.rent.lessee != self.reviewer:
+        if self.rent.guest != self.reviewer:
             raise ValidationError("Відгук може залишити лише орендар цієї оренди.")
 
         if self.rent.status != RentStatus.COMPLETED.name:

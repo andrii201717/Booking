@@ -24,7 +24,7 @@ class ReviewSerializer(serializers.ModelSerializer):
 
         # 3. Перевірка оренди
         rent = attrs.get('rent')
-        if rent.lessee != user:
+        if rent.guest != user:
             raise serializers.ValidationError("Ви можете залишити відгук лише до своєї оренди.")
         if rent.room != attrs['room']:
             raise serializers.ValidationError("Ця оренда не відповідає вибраній кімнаті.")
