@@ -14,15 +14,15 @@ class ReviewSerializer(serializers.ModelSerializer):
     def validate(self, attrs):
         user = self.context['request'].user
 
-        # 1. Роль
+
         if user.role != 'GUEST':
             raise serializers.ValidationError("Лише користувач з роллю 'GUEST' може залишити відгук.")
 
-        # 2. Один відгук на одну кімнату
+
         if Review.objects.filter(reviewer=user, room=attrs['room']).exists():
             raise serializers.ValidationError("Ви вже залишили відгук для цієї кімнати.")
 
-        # 3. Перевірка оренди
+
         rent = attrs.get('rent')
         if rent.guest != user:
             raise serializers.ValidationError("Ви можете залишити відгук лише до своєї оренди.")
