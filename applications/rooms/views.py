@@ -20,7 +20,7 @@ class RoomViewSet(viewsets.ModelViewSet):
     ]
     filterset_class = RoomFilter
     search_fields = ['title', 'description']
-    ordering_fields = ['price', 'created_at']
+    ordering_fields = ['price', 'created_at', 'sta']
     ordering = ['-created_at']
 
 

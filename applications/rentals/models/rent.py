@@ -12,13 +12,13 @@ class Rent(models.Model):
     guest = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name='rent',
+        related_name='rents',
         limit_choices_to={'role': 'GUEST'}
     )
     room = models.ForeignKey(
         Room,
         on_delete=models.CASCADE,
-        related_name='rent'
+        related_name='rents'
     )
     start_date = models.DateField()
     end_date = models.DateField()
